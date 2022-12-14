@@ -1,6 +1,6 @@
 import React from "react";
-import image from "../../assets/Subway.png";
-import image2 from "../../assets/pizza.png";
+import image from "../../../assets/Subway.png";
+import image2 from "../../../assets/pizza.png";
 const Banner = () => {
   return (
     <div className="flex my-4 flex-wrap ">

@@ -10,7 +10,7 @@ const SearchInput: React.FC = () => {
 
   const handleChange = (value: string) => {
     setContent(value);
-    if (value) setIsFilled(true);
+    if (value.length > 1) setIsFilled(true);
     else setIsFilled(false);
   };
 
@@ -23,6 +23,7 @@ const SearchInput: React.FC = () => {
           </span>
           <input
             type="text"
+            placeholder="Jedzenie, Restauracja itp (min. 3 znaki)"
             className="ml-2 outline-none rounded flex-1"
             onChange={(e) => handleChange(e.target.value)}
           />
@@ -39,7 +40,7 @@ const SearchInput: React.FC = () => {
               key={item.name}
               className="flex p-3 items-center gap-2 hover:bg-gray-100 select-none cursor-pointer "
             >
-              <img src={item.img} className="h-8 rounded-full" />
+              <img src={item.img} className="rounded h-12 w-12" />
               <span className="text-xl">{item.name}</span>
             </div>
           ))}

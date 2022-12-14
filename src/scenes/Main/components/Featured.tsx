@@ -1,6 +1,6 @@
 import React from "react";
 import { Package, CaretLeft, CaretRight } from "phosphor-react";
-import { Products } from "../const";
+import { Products } from "../../global/const";
 
 const Featured = () => {
   return (
@@ -16,9 +16,9 @@ const Featured = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-flow-col overflow-hidden gap-3 ">
+      <div className="flex overflow-hidden">
         {Products.map((item) => (
-          <div key={item.name} className=" cursor-pointer hover:opacity-80">
+          <div key={item.name} className=" cursor-pointer hover:opacity-80 w-1/4 p-1">
             <div className="relative">
               <img src={item.img} className="h-40 w-full " />
               <div className="absolute bottom-2 right-2 bg-black text-white p-2 rounded">{item.rating}</div>

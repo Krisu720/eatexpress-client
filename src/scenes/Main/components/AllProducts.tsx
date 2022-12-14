@@ -1,8 +1,12 @@
 import React from "react";
-import { Products } from "../const";
+import { Products } from "../../global/const";
 import { Package } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
 
 const AllProducts = () => {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <div className="my-6 ">
@@ -10,9 +14,9 @@ const AllProducts = () => {
       </div>
       <div className="grid xs:grid-cols-1 md:grid-cols-3 sm:grid-cols-2  lg:grid-cols-4 overflow-hidden gap-3 ">
         {Products.map((item) => (
-          <div key={item.name} className=" cursor-pointer hover:opacity-80 ">
+          <div key={item.id} className=" cursor-pointer hover:opacity-80 " onClick={()=>navigate(`/${item.id}`)}>
             <div className="relative">
-              <img src={item.img} className="h-40 w-full " />
+              <div  className="h-40 w-full " style={{backgroundImage: `url(${item.img})`,backgroundSize: 'cover'}} />
               <div className="absolute bottom-2 right-2 bg-black text-white p-2 rounded">{item.rating}</div>
             </div>
 

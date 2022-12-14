@@ -1,6 +1,6 @@
 import React from 'react'
 import { Package, CaretLeft, CaretRight } from "phosphor-react";
-import { Products } from "../const";
+import { Products } from "../../global/const";
 
 const Rating = () => {
   return (
