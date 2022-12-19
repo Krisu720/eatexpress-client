@@ -124,7 +124,7 @@ export const singleproductconst: products = {
   ],
 }
 
-export const Products: products[] = [
+ const Products: products[] = [
   {
     id: "3584569462334",
     name: "Caserolle",

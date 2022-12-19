@@ -9,7 +9,7 @@ const index = () => {
 
   return (
     <div className="px-6 sm:px-16 flex justify-center items-center">
-      <div className="xl:max-w-[1200px] w-full ">
+      <div className="xl:max-w-[1200px] w-full h-[calc(100vh-110px)]">
         <div className="w-full h-full md:flex justify-center items-center">
           <div className="flex flex-col items-center w-full md:w-1/2 ">
             <h1 className="font-semibold text-3xl">Zaloguj się</h1>
@@ -34,7 +34,7 @@ const index = () => {
               <button className="select-none bg-black py-4 text-white font-semibold px-4 mt-5 w-full rounded">Zaloguj</button>
             </div>
           </div>
-          <div className="w-0.5 h-full bg-black relative hidden md:block">
+          <div className="w-0.5 h-2/3 bg-black relative hidden md:block">
             <div className="absolute bg-white p-2 border-2 hidden md:block border-black rounded-full top-[50%] translate-y-[-50%] left-[50%] translate-x-[-50%]">lub</div>
           </div>
           <div className="flex flex-col items-center w-full md:w-1/2 ">

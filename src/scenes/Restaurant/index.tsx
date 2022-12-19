@@ -3,14 +3,10 @@ import React, { useState } from "react";
 import Product from "./components/Product";
 import { Link, animateScroll as scroll } from "react-scroll";
 import { singleproductconst } from "../global/const";
-import OptionModal from "./components/OptionModal";
 const index = () => {
-  const [optionModal, setOptionModal] = useState<boolean>(false);
-
   return (
     <div className="px-6 sm:px-16 flex justify-center items-center ">
       <div className="xl:max-w-[1200px] w-full ">
-        {optionModal && <OptionModal />}
         <div
           className="w-full h-80 flex flex-col justify-end relative overflow-hidden"
           style={{
@@ -37,9 +33,9 @@ const index = () => {
         <div className="h-10" />
         <div className="grid grid-cols-4 ">
           <div className="col-span-1 mt-5 ">
-            <ul className="text-xl flex flex-col gap-2 sticky top-[110px]">
+            <ul className="text-xl flex flex-col gap-2 sticky top-5">
               {singleproductconst.products?.map((item) => (
-                <Link to={item.id} smooth={true} offset={-110} duration={500}>
+                <Link to={item.id} smooth={true} offset={-20} duration={500}>
                   <li className="cursor-pointer hover:underline">
                     {item.name}
                   </li>
@@ -57,6 +53,7 @@ const index = () => {
                   {item.dishes.map((item) => (
                     <Product
                       key={item.id}
+                      _id={item.id}
                       name={item.name}
                       img={item.img}
                       price={item.price}
