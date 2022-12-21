@@ -1,8 +1,18 @@
 import React from 'react'
 import { Package, CaretLeft, CaretRight } from "phosphor-react";
-import { Products } from "../../global/const";
+import usePublicFetch from '../../../hooks/usePublicFetch';
+import { products } from '../../global/const';
+import { useNavigate } from 'react-router-dom';
+// import { Products } from "../../global/const";
 
 const Rating = () => {
+  
+  const data:products[] = usePublicFetch('http://localhost:5000/restaurants')
+  const navigate = useNavigate()
+
+  data?.sort((a, b) => (a.rating > b.rating) ? -1 : 1)
+
+
   return (
     <>
     <div className="my-6 flex justify-between">
@@ -16,9 +26,9 @@ const Rating = () => {
         </div>
       </div>
     </div>
-    <div className="grid grid-flow-col overflow-hidden gap-3 ">
-      {Products.map((item) => (
-        <div key={item.name} className=" cursor-pointer hover:opacity-80">
+    <div className="flex  overflow-hidden  ">
+      {data?.map((item) => (
+        <div key={item.name} className=" cursor-pointer w-full sm:w-1/2 lg:w-1/4 flex-shrink-0 hover:opacity-80 p-1" onClick={()=>navigate(item._id)}>
           <div className="relative">
               <img src={item.img} className="h-40 w-full " />
               <div className="absolute bottom-2 right-2 bg-black text-white p-2 rounded">{item.rating}</div>

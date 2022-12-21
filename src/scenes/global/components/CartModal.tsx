@@ -1,5 +1,5 @@
 import React from "react";
-import { singleproductconst } from "../const";
+// import { singleproductconst } from "../const";
 import { X } from "phosphor-react";
 import { motion } from "framer-motion";
 import { cartModal, useCartModal } from "../../../hooks/useCartModal";
@@ -21,14 +21,11 @@ const animation = {
 
 const CartModal = () => {
   const { isOpened, switchOpened } = useCartModal();
-  const { products,removeProduct } = cartModal();
+  const { products, removeProduct } = cartModal();
 
-
-  
-const cartTotal = () => {
-  return products.reduce((total, item) => total += item.price,0)
-}
-
+  const cartTotal = () => {
+    return products.reduce((total, item) => (total += item.price), 0);
+  };
 
   return (
     <motion.div
@@ -36,7 +33,7 @@ const cartTotal = () => {
       initial="hidden"
       animate="show"
       exit="exit"
-      className="fixed cartmodal bg-gray-50 z-50 right-0 top-0 h-full p-5 flex flex-col"
+      className="fixed cartmodal bg-gray-50 z-50 right-0 top-0 h-full p-5 flex flex-col min-w-[350px]"
     >
       <div className="flex justify-between items-center">
         <h1 className="font-semibold text-lg">
@@ -44,34 +41,39 @@ const cartTotal = () => {
         </h1>
         <X
           weight="bold"
-          className="cursor-pointer text-white bg-black p-1  rounded-full"
+          className="cursor-pointer text-white bg-black transition-all hover:opacity-80 p-1  rounded-full"
           size={25}
           onClick={() => switchOpened()}
         />
       </div>
       <h1 className="text-5xl font-bold my-7">Pizza Hut</h1>
-      <div className="flex-1 flex flex-col gap-2 overflow-y-auto">
-        {products?.map((item,index) => (
-          <div className="flex" key={index}>
-            <img
-              src={item.img}
-              className="h-16 w-16 mr-3  rounded"
-            />
+      <div className="flex-1 flex flex-col  gap-5 overflow-y-auto">
+        {products?.map((item, index) => (
+          <div className="flex " key={index}>
+            <img src={item.img} className="h-16 w-16 mr-3  rounded" />
             <div className="flex-1">
               <h1 className="font-semibold">{item.name}</h1>
-              <h2 className="text-sm">Rozmiar do wyboru</h2>
-              <h3 className="text-sm text-gray-500">36cm</h3>
-              <h2 className="text-sm">Sos do Wyboru</h2>
-              <h3 className="text-sm text-gray-500">Sos Pomidorowy</h3>
+              {item.sizeOption && (
+                <>
+                  <h2 className="text-sm">Rozmiar do wyboru</h2>
+                  <h3 className="text-sm text-gray-500">{item.sizeOption}</h3>
+                </>
+              )}
+
+              {/* <h2 className="text-sm">Sos do Wyboru</h2>
+              <h3 className="text-sm text-gray-500">Sos Pomidorowy</h3> */}
             </div>
             <div className="ml-2 flex flex-col">
-              <div>
-              {item.price}zł
-                </div>
+              <div>{item.price}zł</div>
               <div className="flex justify-end items-center flex-1">
-                <X weight="bold" className="cursor-pointer text-white bg-red-500 p-1  rounded-full" size={25} onClick={()=>removeProduct(item)}/>
+                <X
+                  weight="bold"
+                  className="cursor-pointer text-white bg-red-500 hover:bg-red-700 p-1  rounded-full transition-all"
+                  size={25}
+                  onClick={() => removeProduct(item)}
+                />
               </div>
-              </div>
+            </div>
           </div>
         ))}
 

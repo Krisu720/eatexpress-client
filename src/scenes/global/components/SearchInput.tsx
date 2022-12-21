@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { MagnifyingGlass } from "phosphor-react";
-import { Products } from "../const";
+import usePublicFetch from "../../../hooks/usePublicFetch";
+import { products } from "../const";
+import { useNavigate } from "react-router-dom";
+// import { Products } from "../const";
 
 
 
@@ -13,6 +16,10 @@ const SearchInput: React.FC = () => {
     if (value.length > 1) setIsFilled(true);
     else setIsFilled(false);
   };
+
+  const data:products[] = usePublicFetch('http://localhost:5000/restaurants')
+  const navigate = useNavigate()
+
 
   return (
     <div className="relative">
@@ -33,18 +40,19 @@ const SearchInput: React.FC = () => {
       </div>
       {isFilled && (
         <div className="bg-white flex flex-col gap-3 p-3 mt-5 rounded absolute w-full z-10">
-          {Products.filter((item) =>
+          {data?.filter((item) =>
             item.name.toLowerCase().includes(content.toLowerCase())
           ).map((item) => (
             <div
               key={item.name}
               className="flex p-3 items-center gap-2 hover:bg-gray-100 select-none cursor-pointer "
+              onClick={() =>navigate(`/${item._id}`)}
             >
               <img src={item.img} className="rounded h-12 w-12" />
               <span className="text-xl">{item.name}</span>
             </div>
           ))}
-          {Products.filter((item) =>
+          {data?.filter((item) =>
             item.name.toLowerCase().includes(content.toLowerCase())
           ).length !== 0 ? (
             <></>

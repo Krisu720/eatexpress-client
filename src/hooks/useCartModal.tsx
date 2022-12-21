@@ -15,7 +15,8 @@ type product = {
     _id: string,
     name: string,
     price: number,
-    img: string
+    img: string,
+    sizeOption?: string
 }
 
 export const useCartModal = create<cartModal>((set)=>({

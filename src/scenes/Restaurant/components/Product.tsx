@@ -1,24 +1,25 @@
 import React, { useState } from "react";
+import { dish } from "../../global/const";
 import OptionModal from "./OptionModal";
 
 interface props {
-  _id: string;
-  name: string;
-  img: string;
-  price: number;
+  item: dish;
 }
 
-const Product = ({_id, name, img, price }: props) => {
+
+
+const Product = ({ item }: props) => {
   const [open, setOpen] = useState<boolean>(false);
+
 
   return (
     <>
-      {open && <OptionModal name={name} img={img} price={price} _id={_id} setOpen={setOpen} />}
+      {open && <OptionModal _id={item._id} img={item.img} name={item.name} price={item.price} options={item.options} setOpen={setOpen} />}
       <div className="cursor-pointer hover:opacity-80 select-none" onClick={()=>setOpen(prev=>!prev)}>
-        <img src={img} />
+        <img src={item.img} />
         <div className="bg-white  p-3">
-          <h1 className="font-semibold">{name}</h1>
-          <h2 className="text-gray-600">{price}zł</h2>
+          <h1 className="font-semibold">{item.name}</h1>
+          <h2 className="text-gray-600">{item.price}zł</h2>
         </div>
       </div>
     </>
