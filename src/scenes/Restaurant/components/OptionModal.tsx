@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cartModal } from "../../../hooks/useCartModal";
+import { cartModal, useCartModal } from "../../../hooks/useCartModal";
 import { dish } from "../../global/const";
 
 interface props {
@@ -20,21 +20,21 @@ interface props {
 
 const OptionModal = ({ _id, name, img, price, options, setOpen }: props) => {
   const { addProduct, products } = cartModal();
-  const [sizeOption, setSizeOption] = useState<string>(options?.sizes[0].name)
+  const [sizeOption, setSizeOption] = useState<string>(options?.sizes[0].name ? options.sizes[0].name : '')
+
+
 
   const addOption = () => {
+    const option = options?.sizes.find((size)=>size.name === sizeOption)
     addProduct({
       _id,
       name,
       img,
       price,
-      sizeOption
+      option
     })
     setOpen(false);
   };
-
-  
-
 
 
   return (
@@ -57,7 +57,7 @@ const OptionModal = ({ _id, name, img, price, options, setOpen }: props) => {
               </div>
               {options.sizes.map((item,index) => <div key={index} className={`flex items-center mx-4 ${options?.sizes && options.sizes?.length-1 !== index  && 'border-b'} border-gray-400 select-none hover:bg-gray-200`}>
                 <label htmlFor={item.name} className=" flex-1 cursor-pointer p-3">
-                  {item.name} <span className="text-gray-500 font-thin">{item.price}zł</span>
+                  {item.name} <span className="text-gray-500 font-thin">{item.price !== 0 && '+'+item.price+'zł'}</span>
                 </label>
                 <input
                   defaultChecked={index === 0}
