@@ -26,8 +26,8 @@ export interface dish {
         name: string;
         price: number;
       }
-    ]
-  }
+    ];
+  };
 }
 
 // export const singleproductconst: products = {

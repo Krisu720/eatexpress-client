@@ -1,14 +1,22 @@
-import React, { useRef, useState } from "react";
-import Restaurants from "./Restaurants";
+import React from "react";
+import Banner from "./Banner";
+import AllProducts from "./AllProducts";
+import Featured from "./Featured";
+import Rating from "./Rating";
+import DefaultMargin from "../../defaultMargin";
+import { products } from "../../types";
+import usePublicFetch from "../../hooks/usePublicFetch";
 
-const index = () => {
+const index: React.FC = () => {
+  const data: products[] = usePublicFetch("http://localhost:5000/restaurants");
 
   return (
-    <div className="px-6 sm:px-16 flex justify-center items-center ">
-      <div className="xl:max-w-[1200px] w-full ">
-        <Restaurants/>
-      </div>
-    </div>
+    <DefaultMargin>
+      <Featured data={data} />
+      <Banner />
+      <Rating data={data} />
+      <AllProducts data={data} />
+    </DefaultMargin>
   );
 };
 

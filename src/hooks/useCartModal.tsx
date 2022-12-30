@@ -6,6 +6,7 @@ interface cartModal {
 }
 
 interface cart {
+  shop: string | null;
   products: product[];
   addProduct: (val: product) => void;
   removeProduct: (val: product) => void;
@@ -13,6 +14,7 @@ interface cart {
 }
 
 type product = {
+  shop: string;
   _id: string;
   name: string;
   price: number;
@@ -32,15 +34,26 @@ export const useCartModal = create<cartModal>((set) => ({
 }));
 
 export const cartModal = create<cart>((set) => ({
+  shop: null,
   products: [],
   addProduct: (val) =>
     set((state) => {
-      return {
-        products: [
-          ...state.products,
-          { ...val, cartId: crypto.randomUUID(), quantity: 1 },
-        ],
-      };
+      if (state.products.length === 0) {
+        return {
+          shop: val.shop,
+          products: [
+            ...state.products,
+            { ...val, cartId: crypto.randomUUID() },
+          ],
+        };
+      } else {
+        return {
+          products: [
+            ...state.products,
+            { ...val, cartId: crypto.randomUUID() },
+          ],
+        };
+      }
     }),
   changeQuantity: (val, type) =>
     set((state) => {
@@ -51,12 +64,18 @@ export const cartModal = create<cart>((set) => ({
       if (type === "add") {
         newProducts[index].quantity += 1;
       } else if (type === "remove") {
-            newProducts[index].quantity -= 1;
+        newProducts[index].quantity -= 1;
       }
       return { products: newProducts };
     }),
   removeProduct: (val) =>
     set((state) => {
+      if(state.products.length === 1) {
+        return {
+          shop: null,
+          products: []
+        }
+      }
       const index = state.products.findIndex(
         (product) => product.cartId === val.cartId
       );
@@ -70,9 +89,9 @@ export const cartTotal = () => {
   const { products } = cartModal();
   return products.reduce((total, item) => {
     if (item.option?.price) {
-      return total + (item.price + item.option.price)*item.quantity;
+      return total + (item.price + item.option.price) * item.quantity;
     } else {
-      return (total += (item.price*item.quantity));
+      return (total += item.price * item.quantity);
     }
   }, 0);
 };

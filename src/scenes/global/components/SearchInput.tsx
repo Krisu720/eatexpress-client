@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MagnifyingGlass } from "phosphor-react";
 import usePublicFetch from "../../../hooks/usePublicFetch";
-import { products } from "../const";
+import { products } from "../../../types";
 import { useNavigate } from "react-router-dom";
 // import { Products } from "../const";
 

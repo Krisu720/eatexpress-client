@@ -1,5 +1,5 @@
 import React from "react";
-import { CaretLeft, CaretRight, X } from "phosphor-react";
+import { CaretLeft, CaretRight, Minus, Plus, X } from "phosphor-react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   cartModal,
@@ -29,7 +29,7 @@ const itemAnimation = {
 
 const FirstSlide = ({ changeSlide }: props) => {
   const { isOpened, switchOpened } = useCartModal();
-  const { products, removeProduct, changeQuantity } = cartModal();
+  const { products, removeProduct, changeQuantity, shop} = cartModal();
 
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const FirstSlide = ({ changeSlide }: props) => {
     <>
       <div className="flex justify-between items-center">
         <h1 className="font-semibold text-lg">
-          Mój koszyk <span className="text-gray-500 text-sm">(2)</span>
+          Mój koszyk {products.length>0 && <span className="text-gray-500 text-sm">{products.length}</span>}
         </h1>
         <X
           weight="bold"
@@ -52,7 +52,7 @@ const FirstSlide = ({ changeSlide }: props) => {
           onClick={() => switchOpened()}
         />
       </div>
-      <h1 className="text-5xl font-bold my-7">Pizza Hut</h1>
+      <h1 className="text-5xl font-bold my-7 max-w-xs">{shop}</h1>
       <div className="flex-1 overflow-y-auto flex flex-col  gap-5 ">
         <AnimatePresence>
           {products?.map((item, index) => (
@@ -61,9 +61,11 @@ const FirstSlide = ({ changeSlide }: props) => {
               initial="hidden"
               animate="show"
               exit="exit"
-              className="flex"
+              // className="border-2 border-gray-300 p-3 rounded"
               key={index}
             >
+              
+              <div className="flex">
               <img src={item.img} className="h-16 w-16 mr-3  rounded" />
               <div className="flex-1">
                 <h1 className="font-semibold">{item.name}</h1>
@@ -87,15 +89,17 @@ const FirstSlide = ({ changeSlide }: props) => {
                 ) : (
                   <div>{item.price * item.quantity}zł</div>
                 )}
-
-                <div className="flex justify-end items-center flex-1">
-                  <X
+              </div>
+              </div>
+              <div className="flex items-center mt-3 justify-center gap-3 border-b-2 pb-5">
+              <X
                     weight="bold"
-                    className="cursor-pointer text-white bg-red-500 hover:bg-red-700 p-1  rounded-full transition-all"
+                    className="cursor-pointer text-white bg-red-500 hover:bg-red-700  p-1 w-12 h-7  rounded-3xl transition-all"
                     size={25}
                     onClick={() => removeProduct(item)}
                   />
-
+                <div className="flex justify-center gap-4 items-center ">
+                  
                   <button
                     className={`${
                       item.quantity === 1
@@ -105,7 +109,7 @@ const FirstSlide = ({ changeSlide }: props) => {
                     onClick={() => changeQuantity(item, "remove")}
                     disabled={item.quantity === 1 ? true : false}
                   >
-                    <CaretLeft size={20} />
+                    <Minus size={20}  weight='bold'/>
                   </button>
                   {item.quantity}
                   <button
@@ -117,10 +121,11 @@ const FirstSlide = ({ changeSlide }: props) => {
                     onClick={() => changeQuantity(item, "add")}
                     disabled={item.quantity === 99 ? true : false}
                   >
-                    <CaretRight size={20} />
+                    <Plus size={20} weight='bold'/>
                   </button>
                 </div>
               </div>
+
             </motion.div>
           ))}
         </AnimatePresence>

@@ -6,9 +6,11 @@ import Authentication from "./scenes/Authentication";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Nav from "./scenes/global/Nav";
 import Footer from "./scenes/global/Footer";
+import Helpers from "./scenes/global/Helpers";
 function App() {
   return (
     <div className="bg-gray-100  poppins">
+        {/* <Helpers /> */}
       <BrowserRouter>
         <Nav />
         <Routes>
