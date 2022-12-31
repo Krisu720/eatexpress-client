@@ -26,8 +26,8 @@ const temporaryData = [
 const Banner: React.FC = () => {
   return (
     <div className="flex my-4 flex-wrap ">
-      {temporaryData.map((item) => (
-        <div className="w-full lg:w-1/3 h-52  p-3">
+      {temporaryData.map((item,index) => (
+        <div key={index} className="w-full lg:w-1/3 h-52  p-3">
           <div
             className={`${item.color} bg-green-700 h-full rounded-xl p-3 flex flex-col justify-around items-start relative overflow-hidden`}
           >

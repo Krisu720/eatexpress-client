@@ -13,7 +13,7 @@ interface cart {
   changeQuantity: (val: product, type: "add" | "remove") => void;
 }
 
-type product = {
+export type product = {
   shop: string;
   _id: string;
   name: string;

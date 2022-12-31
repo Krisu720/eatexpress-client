@@ -1,6 +1,9 @@
 import React from "react";
 import logo from "../../assets/logodark.svg";
-const Footer = () => {
+
+const Footer: React.FC = () => {
+
+  
   return (
     <div className="mt-12 bg-black h-40">
       <div className="px-6 sm:px-16 flex justify-center items-center h-full">
@@ -12,23 +15,23 @@ const Footer = () => {
             <div className="flex items-center justify-center">
               <ul className="text-white">
                 <li className=" text-xs sm:text-md md:text-lg lg:text-xl cursor-pointer">
-                  eat express
+                  <a href=''>eat express</a>
                 </li>
                 <li className=" text-xs sm:text-md md:text-lg lg:text-xl cursor-pointer">
-                  eat express - dla firm
+                  <a href=''>eat express - dla firm</a>
                 </li>
                 <li className=" text-xs sm:text-md md:text-lg lg:text-xl cursor-pointer">
-                  eat express - admin dashboard
+                  <a href=''>eat express - admin dashboard</a>
                 </li>
               </ul>
             </div>
             <div className="flex items-center justify-start">
               <ul className="text-white">
                 <li className="text-xs sm:text-md md:text-lg lg:text-xl cursor-pointer">
-                  Regulamin
+                  <a href=''> Regulamin</a>
                 </li>
                 <li className="text-xs sm:text-md md:text-lg lg:text-xl cursor-pointer">
-                  Polityka prywatności
+                  <a href=''> Polityka prywatności</a>
                 </li>
               </ul>
             </div>

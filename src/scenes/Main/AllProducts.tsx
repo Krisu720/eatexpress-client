@@ -14,7 +14,7 @@ const AllProducts: React.FC<Props> = ({ data }) => {
       </div>
       <div className="grid xs:grid-cols-1 md:grid-cols-3 sm:grid-cols-2  lg:grid-cols-4 overflow-hidden gap-3 ">
         {data?.map((item) => (
-          <CardGrid item={item} />
+          <CardGrid key={item._id} item={item} />
         ))}
       </div>
     </>

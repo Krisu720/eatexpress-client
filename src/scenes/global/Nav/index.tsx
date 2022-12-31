@@ -1,47 +1,25 @@
-import React, { useEffect, useState } from "react";
-import SearchInput from "./components/SearchInput";
-import logo from "../../assets/logo.svg";
-import logodark from "../../assets/logodark.svg";
-import { CaretUp, ShoppingCart, User } from "phosphor-react";
+import React from "react";
+import SearchInput from "../components/SearchInput";
+import logo from "../../../assets/logo.svg";
+import { ShoppingCart, User } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
-import CartModal from "./components/CartModal";
-import { AnimatePresence, motion } from "framer-motion";
-import { animateScroll as scroll } from "react-scroll";
-import { cartModal, useCartModal } from "../../hooks/useCartModal";
-const Nav = () => {
-  
+import CartModal from "./CartModal";
+import { AnimatePresence } from "framer-motion";
+import { cartModal, useCartModal } from "../../../hooks/useCartModal";
+import FloatingScroll from "../components/FloatingScroll";
+
+
+const index: React.FC = () => {
   const logged = false;
   const navigate = useNavigate();
-  
-  const [moved, setMoved] = useState<boolean>(false);
-  const { isOpened, switchOpened } = useCartModal();
-  const { products } = cartModal();
 
-  useEffect(() => {
-    addEventListener("scroll", () => {
-      if (window.scrollY > 80) {
-        setMoved(true);
-      } else {
-        setMoved(false);
-      }
-    });
-  }, []);
+  const { isOpened, switchOpened } = useCartModal();
+
+  const { products } = cartModal();
 
   return (
     <>
-      <AnimatePresence>
-        {moved && (
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            className="fixed hidden sm:block text-white rounded-full shadow-lg bg-purple-500 p-2 left-8 bottom-8 cursor-pointer"
-            onClick={() => scroll.scrollToTop()}
-          >
-            <CaretUp size={35} weight="bold" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <FloatingScroll />
       <div className="px-6 sm:px-16 flex justify-center items-center z-50 transition-all">
         <div className="xl:max-w-[1200px] w-full">
           <AnimatePresence>{isOpened && <CartModal />}</AnimatePresence>
@@ -58,14 +36,17 @@ const Nav = () => {
               <div
                 className="bg-black relative text-white text-xs sm:text-base rounded-full px-4 py-2 select-none cursor-pointer flex items-center gap-1 hover:opacity-80 transition-all"
                 onClick={() => switchOpened()}
-                >
-                {products.length > 0 && <div className="absolute text-white bg-purple-600 w-7 rounded-full flex justify-center right-[-8px] top-[-8px] ">{products.length}</div> }
+              >
+                {products.length > 0 && (
+                  <div className="absolute text-white bg-purple-600 w-7 rounded-full flex justify-center right-[-8px] top-[-8px] ">
+                    {products.length}
+                  </div>
+                )}
                 <ShoppingCart size={24} />
                 <span>Koszyk</span>
-                
               </div>
               {logged ? (
-                <div className="bg-black px-2 py-2 rounded-full text-xs sm:text-base select-none cursor-pointer hover:opacity-80">
+                <div className="bg-black text-white px-2 py-2 rounded-full text-xs sm:text-base select-none cursor-pointer hover:opacity-80">
                   <User size={24} />
                 </div>
               ) : (
@@ -90,4 +71,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default index;

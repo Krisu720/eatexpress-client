@@ -25,7 +25,7 @@ const Rating: React.FC<Props> = ({ data }) => {
       </div>
       <div className="flex overflow-hidden  ">
         {data?.map((item) => (
-          <CardFlex item={item} />
+          <CardFlex key={item._id} item={item} />
         ))}
       </div>
     </>

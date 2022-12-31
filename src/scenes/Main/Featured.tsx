@@ -36,7 +36,7 @@ const Featured: React.FC<Props> = ({ data }) => {
           style={{ transform: `translate(${x}%)` }}
         >
           {data?.map((item) => (
-            <CardFlex item={item} />
+            <CardFlex key={item._id} item={item} />
           ))}
         </div>
       </div>

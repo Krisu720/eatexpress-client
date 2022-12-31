@@ -1,0 +1,89 @@
+import React, { useRef } from "react";
+
+type address = {
+  name: string;
+  street: string;
+  number: string;
+  city: string;
+};
+
+interface Props {
+  adress: address | null;
+  setAdress: React.Dispatch<React.SetStateAction<address | null>>;
+}
+
+const Adres: React.FC<Props> = ({ adress, setAdress }) => {
+  const city = useRef<HTMLInputElement>(null);
+  const number = useRef<HTMLInputElement>(null);
+  const street = useRef<HTMLInputElement>(null);
+
+  const addNewAddress = () => {
+    if (city.current?.value && number.current?.value && street.current?.value) {
+      setAdress({
+        name: street.current.value,
+        street: street.current.value,
+        number: number.current.value,
+        city: city.current.value,
+      });
+    }
+  };
+
+  return (
+    <>
+      <div className="flex justify-between mt-7 mb-3 items-center">
+        <h1 className="text-2xl font-bold ">Adres</h1>
+        <h1 className="font-semibold cursor-pointer hover:opacity-80">Zmień</h1>
+      </div>
+      <div className="flex items-center p-4 mx-2 border-2 rounded">
+        {adress ? (
+          <>
+            {" "}
+            <img
+              src="https://i.insider.com/5c954296dc67671dc8346930?width=1136&format=jpeg"
+              className="h-14 w-14 rounded-full"
+            />
+            <div className="ml-5">
+              <h1 className="text-lg font-semibold">{adress.name}</h1>
+              <h2 className="text-gray-500 text-sm">
+                {adress.street} / {adress.number}
+              </h2>
+              <h2 className="text-gray-500 text-sm">{adress.city}</h2>
+            </div>{" "}
+          </>
+        ) : (
+          <div className="flex flex-col">
+            <h1 className="text-gray-500 font-semibold flex justify-center w-full">
+              Wprowadź adres
+            </h1>
+            <input
+              type="text"
+              placeholder="Miasto"
+              className="bg-gray-200 mt-4 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700  focus:outline-none leading-none focus:bg-white focus:border-purple-500"
+              ref={city}
+            />
+            <input
+              type="text"
+              placeholder="Ulica"
+              className="bg-gray-200 mt-4 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700  focus:outline-none leading-none focus:bg-white focus:border-purple-500"
+              ref={street}
+            />
+            <input
+              type="text"
+              placeholder="Numer domu"
+              className="bg-gray-200 mt-4 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700  focus:outline-none leading-none focus:bg-white focus:border-purple-500"
+              ref={number}
+            />
+            <button
+              className="select-none bg-black py-3 text-white font-semibold px-4 mt-4 w-full rounded"
+              onClick={() => addNewAddress()}
+            >
+              Dodaj adres
+            </button>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Adres;

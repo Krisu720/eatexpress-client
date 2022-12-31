@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-// import { singleproductconst } from "../const";
-import { X } from "phosphor-react";
-import { AnimatePresence, motion } from "framer-motion";
-import { cartModal, useCartModal } from "../../../hooks/useCartModal";
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import FirstSlide from "./FirstSlide";
 import SecondSlide from "./SecondSlide";
 
@@ -31,7 +27,7 @@ const animation = {
   },
 };
 
-const CartModal = () => {
+const index: React.FC = () => {
   const [slide, setSlide] = useState<number>(1);
 
   const changeSlide = (slide: number) => {
@@ -52,4 +48,4 @@ const CartModal = () => {
   );
 };
 
-export default CartModal;
+export default index;
