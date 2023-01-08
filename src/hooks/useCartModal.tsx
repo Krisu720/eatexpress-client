@@ -11,6 +11,7 @@ interface cart {
   addProduct: (val: product) => void;
   removeProduct: (val: product) => void;
   changeQuantity: (val: product, type: "add" | "remove") => void;
+  removeAllProducts: () => void;
 }
 
 export type product = {
@@ -83,6 +84,8 @@ export const cartModal = create<cart>((set) => ({
       newProducts.splice(index, 1);
       return { products: newProducts };
     }),
+    removeAllProducts: () =>
+    set({products: [], shop: null}),
 }));
 
 export const cartTotal = () => {

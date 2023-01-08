@@ -11,6 +11,8 @@ interface Props {
 }
 
 const Method: React.FC<Props> = ({ method, setMethod, methods }) => {
+
+
   const changeMethod = () => {
     if (method === methods.card) {
       setMethod(methods.cash);

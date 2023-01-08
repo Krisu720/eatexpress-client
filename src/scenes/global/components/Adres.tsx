@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useAuthStore } from "../../../hooks/useAuth";
 
 type address = {
   name: string;
@@ -8,18 +9,22 @@ type address = {
 };
 
 interface Props {
-  adress: address | null;
-  setAdress: React.Dispatch<React.SetStateAction<address | null>>;
+  address: address | null;
+  setAddress: React.Dispatch<React.SetStateAction<address | null>>;
+  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Adres: React.FC<Props> = ({ adress, setAdress }) => {
+const Adres: React.FC<Props> = ({ address, setAddress,setOpenModal }) => {
+
   const city = useRef<HTMLInputElement>(null);
   const number = useRef<HTMLInputElement>(null);
   const street = useRef<HTMLInputElement>(null);
 
   const addNewAddress = () => {
+
+
     if (city.current?.value && number.current?.value && street.current?.value) {
-      setAdress({
+      setAddress({
         name: street.current.value,
         street: street.current.value,
         number: number.current.value,
@@ -32,22 +37,24 @@ const Adres: React.FC<Props> = ({ adress, setAdress }) => {
     <>
       <div className="flex justify-between mt-7 mb-3 items-center">
         <h1 className="text-2xl font-bold ">Adres</h1>
-        <h1 className="font-semibold cursor-pointer hover:opacity-80">Zmień</h1>
+        <h1 className="font-semibold cursor-pointer hover:opacity-80" onClick={()=>setOpenModal(true)}>Zmień</h1>
       </div>
       <div className="flex items-center p-4 mx-2 border-2 rounded">
-        {adress ? (
+        {address ? (
           <>
             {" "}
+            <div className="h-14 w-14 rounded-full overflow-hidden">
             <img
               src="https://i.insider.com/5c954296dc67671dc8346930?width=1136&format=jpeg"
               className="h-14 w-14 rounded-full"
             />
+            </div>
             <div className="ml-5">
-              <h1 className="text-lg font-semibold">{adress.name}</h1>
+              <h1 className="text-lg font-semibold">{address.name}</h1>
               <h2 className="text-gray-500 text-sm">
-                {adress.street} / {adress.number}
+                {address.street} / {address.number}
               </h2>
-              <h2 className="text-gray-500 text-sm">{adress.city}</h2>
+              <h2 className="text-gray-500 text-sm">{address.city}</h2>
             </div>{" "}
           </>
         ) : (
