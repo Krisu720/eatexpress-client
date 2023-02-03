@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import DefaultMargin from "../../defaultMargin";
+import DefaultMargin from "../../DefaultMargin";
 import AccountSettings from "./AccountSettings";
 import Orders from "./Orders";
 import { motion } from "framer-motion";
@@ -72,7 +72,7 @@ const index: React.FC = () => {
 
   return (
     <DefaultMargin>
-      <div className="flex gap-3 mt-10">
+      <div className="flex gap-3 mt-10 ">
         <button
           className={`${
             active === page.orders
@@ -94,11 +94,11 @@ const index: React.FC = () => {
           Ustawienia Konta
         </button>
       </div>
-      
-    
+      <div className="min-h-[calc(100vh-200px)]">
 
       {active === page.orders && <Orders />}
       {active === page.accountSettings && <AccountSettings />}
+      </div>
     </DefaultMargin>
   );
 };

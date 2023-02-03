@@ -38,7 +38,7 @@ const FirstSlide: React.FC<Props> = ({ changeSlide }) => {
           onClick={() => switchOpened()}
         />
       </div>
-      <h1 className="text-5xl font-bold my-7 max-w-xs">{shop}</h1>
+      <h1 className="text-5xl font-bold my-7 max-w-xs">{shop?.name}</h1>
       <div className="flex-1 overflow-y-auto flex flex-col  gap-5 ">
         <AnimatePresence>
           {products?.map((item) => (

@@ -1,12 +1,15 @@
-import React, { useRef } from "react";
+import { Axios } from "axios";
+import React, { useRef,useState } from "react";
 import axios from "../../axios";
 import { useAuthStore } from "../../hooks/useAuth";
-
+import Alert from "../global/components/Alert";
 const Login: React.FC = () => {
   const { setUser } = useAuthStore();
 
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
+
+  const [error, setError] = useState<string | null>(null)
 
   const Login = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,13 +23,14 @@ const Login: React.FC = () => {
         setUser(res.data);
       }
       console.log(res.data);
-    } catch (e) {
-      console.log(e)
+  } catch (err) {
+      setError(err.response.data);
     }
   };
 
   return (
-    <div className="flex flex-col items-center w-full lg:w-1/2 ">
+    <div className="flex flex-col items-center w-full lg:w-1/2 my-6">
+      <Alert error={error} setError={setError}/>
       <h1 className="font-semibold text-3xl">Zaloguj się</h1>
       <form className=" min-w-[300px] mt-10" onSubmit={(e) => Login(e)}>
         <p>Adres Email</p>

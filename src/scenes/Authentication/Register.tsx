@@ -2,7 +2,7 @@ import React from "react";
 
 const Register: React.FC = () => {
   return (
-    <div className="flex flex-col items-center w-full lg:w-1/2 ">
+    <div className="flex flex-col items-center w-full lg:w-1/2 my-6">
       <h1 className="font-semibold text-3xl">Zarejestruj się</h1>
       <form className=" min-w-[300px] mt-10" >
         <p>Adres Email</p>

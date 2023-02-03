@@ -1,3 +1,4 @@
+import { House } from "phosphor-react";
 import React, { useRef } from "react";
 import { useAuthStore } from "../../../hooks/useAuth";
 
@@ -44,10 +45,7 @@ const Adres: React.FC<Props> = ({ address, setAddress,setOpenModal }) => {
           <>
             {" "}
             <div className="h-14 w-14 rounded-full overflow-hidden">
-            <img
-              src="https://i.insider.com/5c954296dc67671dc8346930?width=1136&format=jpeg"
-              className="h-14 w-14 rounded-full"
-            />
+            <House size={52} color="#141414" weight="bold" />
             </div>
             <div className="ml-5">
               <h1 className="text-lg font-semibold">{address.name}</h1>

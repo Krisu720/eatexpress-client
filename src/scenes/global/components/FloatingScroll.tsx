@@ -34,7 +34,7 @@ const FloatingScroll: React.FC = () => {
           exit={{ opacity: 0, y: 100 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.65, transition: { duration: 0.15 } }}
-          className="fixed hidden sm:block text-white rounded-full shadow-lg bg-purple-500 p-2 left-8 bottom-8 cursor-pointer"
+          className="fixed hidden sm:block text-white rounded-full shadow-lg bg-purple-500 p-2 left-8 bottom-8 cursor-pointer z-50"
           onClick={() => scroll.scrollToTop({ duration: 100 })}
         >
           <CaretUp size={35} weight="bold" />

@@ -3,12 +3,14 @@ import { cartModal } from "../../../hooks/useCartModal";
 import { dish } from "../../../types";
 
 interface Props extends dish {
+  shopId: string;
   shopName: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const OptionModal: React.FC<Props> = ({
   shopName,
+  shopId,
   _id,
   name,
   img,
@@ -24,9 +26,12 @@ const OptionModal: React.FC<Props> = ({
 
   const addOption = () => {
     const option = options?.sizes?.find((size) => size.name === sizeOption);
-    if (shop === shopName || shop === null) {
+    if (shop?.name === shopName || shop === null) {
       addProduct({
-        shop: shopName,
+        shop: {
+          name: shopName,
+          _id: shopId
+        },
         _id,
         name,
         img,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, CaretLeft } from "phosphor-react";
+import { X, CaretLeft, House } from "phosphor-react";
 import {
   cartModal,
   cartTotal,
@@ -9,6 +9,9 @@ import Adres from "../../components/Adres";
 import Method from "../../components/Method";
 import axios from "../../../../axios";
 import { useAuthStore } from "../../../../hooks/useAuth";
+import {io} from 'socket.io-client'
+
+const socket = io("http://localhost:5000/")
 
 interface Props {
   changeSlide: (slide: number) => void;
@@ -36,11 +39,13 @@ const SecondSlide: React.FC<Props> = ({ changeSlide }) => {
     setOpenModal(false);
   };
 
+  
   const { switchOpened } = useCartModal();
-  const { products, removeAllProducts } = cartModal();
-
+  const { products, removeAllProducts,shop } = cartModal();
+  
   const { user } = useAuthStore();
-
+  
+  console.log(products)
   console.log(user?.address);
 
   const [address, setAddress] = useState<address | null>(
@@ -63,7 +68,15 @@ const SecondSlide: React.FC<Props> = ({ changeSlide }) => {
           method,
           address,
           userId: user?._id,
+          restaurantId: shop?._id
         });
+        await socket.emit("newOrder",{
+          products: changedProducts,
+          method,
+          address,
+          userId: user?._id,
+        })
+        console.log(res)
         if ((res.status = 200)) {
           removeAllProducts();
           switchOpened();
@@ -96,10 +109,7 @@ const SecondSlide: React.FC<Props> = ({ changeSlide }) => {
                 }
               >
                 <div className="h-14 w-14 rounded-full overflow-hidden">
-                  <img
-                    src="https://i.insider.com/5c954296dc67671dc8346930?width=1136&format=jpeg"
-                    className="h-14 w-14 rounded-full"
-                  />
+                <House size={52} color="#141414" weight="bold" />
                 </div>
                 <div className="ml-5">
                   <h1 className="text-lg font-semibold">
@@ -129,10 +139,7 @@ const SecondSlide: React.FC<Props> = ({ changeSlide }) => {
                 }
               >
                 <div className="h-14 w-14 rounded-full overflow-hidden">
-                  <img
-                    src="https://i.insider.com/5c954296dc67671dc8346930?width=1136&format=jpeg"
-                    className="h-14 w-14 rounded-full"
-                  />
+                <House size={52} color="#141414" weight="bold" />
                 </div>
                 <div className="ml-5">
                   <h1 className="text-lg font-semibold">{item.name}</h1>
@@ -167,7 +174,7 @@ const SecondSlide: React.FC<Props> = ({ changeSlide }) => {
           onClick={() => switchOpened()}
         />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 overflow-y-auto">
         <Adres
           address={address}
           setAddress={setAddress}

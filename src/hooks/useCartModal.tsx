@@ -1,4 +1,5 @@
 import create from "zustand";
+import { v4 as uuidv4 } from 'uuid';
 
 interface cartModal {
   isOpened: boolean;
@@ -6,7 +7,10 @@ interface cartModal {
 }
 
 interface cart {
-  shop: string | null;
+  shop: {
+    _id: string;
+    name: string;
+  } | null;
   products: product[];
   addProduct: (val: product) => void;
   removeProduct: (val: product) => void;
@@ -15,7 +19,10 @@ interface cart {
 }
 
 export type product = {
-  shop: string;
+  shop: {
+    _id: string;
+    name: string;
+  } | null;
   _id: string;
   name: string;
   price: number;
@@ -44,14 +51,14 @@ export const cartModal = create<cart>((set) => ({
           shop: val.shop,
           products: [
             ...state.products,
-            { ...val, cartId: crypto.randomUUID() },
+            { ...val, cartId: uuidv4() },
           ],
         };
       } else {
         return {
           products: [
             ...state.products,
-            { ...val, cartId: crypto.randomUUID() },
+            { ...val, cartId: uuidv4() },
           ],
         };
       }

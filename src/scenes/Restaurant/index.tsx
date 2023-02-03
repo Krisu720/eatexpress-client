@@ -5,14 +5,17 @@ import { products } from "../../types";
 import usePublicFetch from "../../hooks/usePublicFetch";
 import { useParams } from "react-router-dom";
 import Banner from "./components/Banner";
-import DefaultMargin from "../../defaultMargin";
+import DefaultMargin from "../../DefaultMargin";
 
 const index: React.FC = () => {
   
   const { id } = useParams();
 
+  // const data: products = usePublicFetch(
+  //   `http://localhost:5000/restaurants/${id}`
+  // );
   const data: products = usePublicFetch(
-    `http://localhost:5000/restaurants/${id}`
+    `http://192.168.100.67:5000/restaurants/${id}`
   );
 
   return (
@@ -36,7 +39,7 @@ const index: React.FC = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {item.dishes.map((item) => (
-                  <Product key={item._id} item={item} shopName={data?.name} />
+                  <Product key={item._id} item={item} shopName={data?.name} shopId={data._id} />
                 ))}
               </div>
             </div>

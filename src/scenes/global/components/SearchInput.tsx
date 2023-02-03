@@ -3,24 +3,24 @@ import { MagnifyingGlass } from "phosphor-react";
 import usePublicFetch from "../../../hooks/usePublicFetch";
 import { products } from "../../../types";
 import { useNavigate } from "react-router-dom";
-
+import { useClickOutside } from "react-click-outside-hook";
 const SearchInput: React.FC = () => {
-  
   const [isFilled, setIsFilled] = useState<boolean>(false);
   const [content, setContent] = useState<string>("");
-  const inputRef = useRef<HTMLInputElement>(null);
+
+  const [ref, hasClickedOutside] = useClickOutside();
+  const [refInput, clickedOutside] = useClickOutside();
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
-        setIsFilled(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    if (hasClickedOutside && clickedOutside) setIsFilled(false);
+    else if (
+      (clickedOutside === false &&
+        hasClickedOutside === true &&
+        refInput.current.value.length > 1) ||
+      (clickedOutside === true && hasClickedOutside === false)
+    )
+      setIsFilled(true);
+  }, [hasClickedOutside, clickedOutside]);
 
   const handleChange = (value: string) => {
     setContent(value);
@@ -28,7 +28,16 @@ const SearchInput: React.FC = () => {
     else setIsFilled(false);
   };
 
-  const data: products[] = usePublicFetch("http://localhost:5000/restaurants");
+  const handleNavigate = async (nav: string) => {
+    await navigate("/");
+    await navigate(nav);
+    setIsFilled(false);
+  };
+
+  // const data: products[] = usePublicFetch("http://localhost:5000/restaurants");
+  const data: products[] = usePublicFetch(
+    "http://192.168.100.67:5000/restaurants"
+  );
   const navigate = useNavigate();
 
   return (
@@ -39,7 +48,7 @@ const SearchInput: React.FC = () => {
             <MagnifyingGlass size={28} className="mr-2" />
           </span>
           <input
-            ref={inputRef}
+            ref={refInput}
             type="text"
             placeholder="Jedzenie, Restauracja itp (min. 3 znaki)"
             className="ml-2 outline-none rounded flex-1"
@@ -47,7 +56,7 @@ const SearchInput: React.FC = () => {
           />
         </div>
       </div>
-      <div>
+      <div ref={ref}>
         {isFilled && (
           <div className="bg-white flex flex-col gap-3 p-3 mt-5 rounded absolute w-full z-30">
             {data
@@ -58,9 +67,15 @@ const SearchInput: React.FC = () => {
                 <div
                   key={item.name}
                   className="flex p-3 items-center gap-2 hover:bg-gray-100 select-none cursor-pointer "
-                  onClick={() => navigate(`/${item._id}`)}
+                  onClick={() => handleNavigate(item._id)}
                 >
-                  <img src={item.img} className="rounded h-12 w-12" />
+                  <div
+                    style={{
+                      backgroundImage: `url(${item.img})`,
+                      backgroundSize: "cover",
+                    }}
+                    className="rounded h-12 w-12"
+                  />
                   <span className="text-xl">{item.name}</span>
                 </div>
               ))}

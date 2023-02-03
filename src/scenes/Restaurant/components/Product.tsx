@@ -5,9 +5,10 @@ import OptionModal from "./OptionModal";
 interface Props {
   item: dish;
   shopName: string;
+  shopId: string;
 }
 
-const Product: React.FC<Props> = ({ item, shopName }) => {
+const Product: React.FC<Props> = ({ item, shopName,shopId }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
@@ -20,6 +21,7 @@ const Product: React.FC<Props> = ({ item, shopName }) => {
           price={item.price}
           options={item.options}
           shopName={shopName}
+          shopId={shopId}
           setOpen={setOpen}
         />
       )}

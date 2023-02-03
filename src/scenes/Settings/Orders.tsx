@@ -10,7 +10,24 @@ interface Order {
   };
   products: [
     {
-      _id: string;
+      _id: {
+        _id: string;
+        name: string;
+        price: number;
+        img: string;
+        options: {
+          sizes: [
+            {
+              name: string;
+              price: number;
+              _id: string;
+            }
+          ];
+        };
+        createdAt: string;
+        updatedAt: string;
+        __v: number;
+      } | null;
       quantity: number;
     }
   ];
@@ -22,14 +39,12 @@ interface Order {
   updatedAt: string;
 }
 
-
 const Orders: React.FC = () => {
-  
-  const {user} = useAuthStore()
-  
+  const { user } = useAuthStore();
+
   const [data, setData] = useState<Order[] | null>(null);
 
-  console.log(data)
+  console.log(data);
 
   useEffect(() => {
     const get = async () => {
@@ -51,7 +66,7 @@ const Orders: React.FC = () => {
     const dateB = new Date(b);
     return dateB.getTime() - dateA.getTime();
   };
-  // const orders = user?.orders 
+  // const orders = user?.orders
   // orders?.sort((a, b) => sortByDate(a.createdAt, b.createdAt));
 
   data?.sort((a, b) => sortByDate(a.createdAt, b.createdAt));
@@ -66,6 +81,17 @@ const Orders: React.FC = () => {
           <h1 className="text-3xl font-semibold">
             Order <span className="text-xl text-gray-500">{item._id}</span>
           </h1>
+
+          {item.products.map((item, index) => (
+            <div key={index} className='my-2'>
+              <div className="flex items-center gap-2">
+                <h1 className="text-gray-500">{item.quantity} x</h1>
+                <img src={item._id?.img} className="h-10 w-10" />
+                <h2 className="text-gray-500">{item._id?.name}</h2>
+                <h2 className="">{item._id?.price} zł</h2>
+              </div>
+            </div>
+          ))}
           <h2>
             <span className="text-gray-500">Data zamówienia:</span>{" "}
             {convertDate(item.createdAt)}
@@ -81,13 +107,6 @@ const Orders: React.FC = () => {
             <span className="text-gray-500">Adres:</span> {item.address.city}{" "}
             {item.address.street}/{item.address.number}
           </h2>
-          {item.products.map((item) => (
-            <div key={item._id}>
-              <h1>
-                {item._id} x {item.quantity}
-              </h1>
-            </div>
-          ))}
         </div>
       ))}
     </div>
